@@ -1,0 +1,52 @@
+﻿@model IEnumerable<BusTour.Place_in_the_route>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="uk-text-large" class="uk-margin-top">Place in the Routes</h2>
+
+<p class="link">
+    @Html.ActionLink("Create New", "Create", new { }, htmlAttributes: new { @class = "uk-button uk-button-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Number of Day in Route")
+        </th>
+        <th>
+            @Html.DisplayName("Place")
+        </th>
+        <th>
+            @Html.DisplayName("Route")
+        </th>
+        <th>
+            @Html.DisplayName("Day Description")
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Number_of_Day)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Place.Place_short_descr)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Route.Route_Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Day_Description)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { id = item.Place_in_the_route_Id }, htmlAttributes: new { @class = "uk-button uk-button-primary uk-float-right" })
+            @Html.ActionLink("Details", "Details", new { id = item.Place_in_the_route_Id }, htmlAttributes: new { @class = "uk-button uk-button-primary uk-float-right" })
+            @Html.ActionLink("Edit", "Edit", new { id = item.Place_in_the_route_Id }, htmlAttributes: new { @class = "uk-button uk-button-primary uk-float-right" })
+
+        </td>
+    </tr>
+}
+
+</table>

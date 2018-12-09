@@ -1,0 +1,43 @@
+﻿@model BusTour.Place
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="uk-text-large" class="uk-margin-top">Place Details</h2>
+
+<div>
+    <h4>Place</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("City")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City_Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Place Short Description")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Place_short_descr)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Place Type")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Place_Type.Place_Type1)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Place_Id }) |
+    @Html.ActionLink("Back to List", "Index", new { }, htmlAttributes: new { @class = "uk-button uk-button-primary" })
+</p>

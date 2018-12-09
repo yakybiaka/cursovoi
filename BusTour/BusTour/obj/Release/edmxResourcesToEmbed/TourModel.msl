@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище Bus_TourModel1Container" CdmEntityContainer="Bus_TourEntities1">
+    <EntitySetMapping Name="City">
+      <EntityTypeMapping TypeName="Bus_TourModel1.City">
+        <MappingFragment StoreEntitySet="City">
+          <ScalarProperty Name="City_Image_Name" ColumnName="City_Image_Name" />
+          <ScalarProperty Name="Country_Id" ColumnName="Country_Id" />
+          <ScalarProperty Name="City_Id" ColumnName="City_Id" />
+          <ScalarProperty Name="City_name" ColumnName="City_name" />
+          <ScalarProperty Name="City_short_descr" ColumnName="City_short_descr" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Place">
+      <EntityTypeMapping TypeName="Bus_TourModel1.Place">
+        <MappingFragment StoreEntitySet="Place">
+          <ScalarProperty Name="Place_Image_Name" ColumnName="Place_Image_Name" />
+          <ScalarProperty Name="Place_Id" ColumnName="Place_Id" />
+          <ScalarProperty Name="City_Id" ColumnName="City_Id" />
+          <ScalarProperty Name="Type_Place_Id" ColumnName="Type_Place_Id" />
+          <ScalarProperty Name="Place_short_descr" ColumnName="Place_short_descr" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Place_in_the_route">
+      <EntityTypeMapping TypeName="Bus_TourModel1.Place_in_the_route">
+        <MappingFragment StoreEntitySet="Place_in_the_route">
+          <ScalarProperty Name="Day_Description" ColumnName="Day_Description" />
+          <ScalarProperty Name="Place_in_the_route_Id" ColumnName="Place_in_the_route_Id" />
+          <ScalarProperty Name="Place_Id" ColumnName="Place_Id" />
+          <ScalarProperty Name="Route_Id" ColumnName="Route_Id" />
+          <ScalarProperty Name="Number_of_Day" ColumnName="Number_of_Day" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Place_Type">
+      <EntityTypeMapping TypeName="Bus_TourModel1.Place_Type">
+        <MappingFragment StoreEntitySet="Place_Type">
+          <ScalarProperty Name="Type_Place_Id" ColumnName="Type_Place_Id" />
+          <ScalarProperty Name="Place_Type1" ColumnName="Place_Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Route">
+      <EntityTypeMapping TypeName="Bus_TourModel1.Route">
+        <MappingFragment StoreEntitySet="Route">
+          <ScalarProperty Name="Route_Id" ColumnName="Route_Id" />
+          <ScalarProperty Name="Id_Type_Route" ColumnName="Id_Type_Route" />
+          <ScalarProperty Name="Route_Duration" ColumnName="Route_Duration" />
+          <ScalarProperty Name="Route_Description" ColumnName="Route_Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Route_Type">
+      <EntityTypeMapping TypeName="Bus_TourModel1.Route_Type">
+        <MappingFragment StoreEntitySet="Route_Type">
+          <ScalarProperty Name="Id_Type_Route" ColumnName="Id_Type_Route" />
+          <ScalarProperty Name="Route_Type1" ColumnName="Route_Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="Bus_TourModel1.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tour">
+      <EntityTypeMapping TypeName="Bus_TourModel1.Tour">
+        <MappingFragment StoreEntitySet="Tour">
+          <ScalarProperty Name="Tour_Image_Name" ColumnName="Tour_Image_Name" />
+          <ScalarProperty Name="Tour_Name" ColumnName="Tour_Name" />
+          <ScalarProperty Name="Tour_Id" ColumnName="Tour_Id" />
+          <ScalarProperty Name="Route_Id" ColumnName="Route_Id" />
+          <ScalarProperty Name="City_Id" ColumnName="City_Id" />
+          <ScalarProperty Name="Tour_Cost" ColumnName="Tour_Cost" />
+          <ScalarProperty Name="Tour_Duration" ColumnName="Tour_Duration" />
+          <ScalarProperty Name="Date_of_Depature" ColumnName="Date_of_Depature" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Country">
+      <EntityTypeMapping TypeName="Bus_TourModel1.Country">
+        <MappingFragment StoreEntitySet="Country">
+          <ScalarProperty Name="Country_Name" ColumnName="Country_Name" />
+          <ScalarProperty Name="Country_Id" ColumnName="Country_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,593 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище Bus_TourModel1" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="City_Id" />
+          </Key>
+          <Property Name="City_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="City_name" Type="nchar" MaxLength="30" />
+          <Property Name="Country_Id" Type="int" />
+          <Property Name="City_short_descr" Type="nchar" MaxLength="300" />
+          <Property Name="City_Image_Name" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Country_Id" />
+          </Key>
+          <Property Name="Country_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Country_Name" Type="nchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Place">
+          <Key>
+            <PropertyRef Name="Place_Id" />
+          </Key>
+          <Property Name="Place_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="City_Id" Type="int" />
+          <Property Name="Type_Place_Id" Type="int" />
+          <Property Name="Place_short_descr" Type="nchar" MaxLength="150" />
+          <Property Name="Place_Image_Name" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Place_in_the_route">
+          <Key>
+            <PropertyRef Name="Place_in_the_route_Id" />
+          </Key>
+          <Property Name="Place_in_the_route_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Place_Id" Type="int" />
+          <Property Name="Route_Id" Type="int" />
+          <Property Name="Number_of_Day" Type="int" />
+          <Property Name="Day_Description" Type="nchar" MaxLength="900" />
+        </EntityType>
+        <EntityType Name="Place_Type">
+          <Key>
+            <PropertyRef Name="Type_Place_Id" />
+          </Key>
+          <Property Name="Type_Place_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Place_Type" Type="nchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="Route_Id" />
+          </Key>
+          <Property Name="Route_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Type_Route" Type="int" Nullable="false" />
+          <Property Name="Route_Duration" Type="int" />
+          <Property Name="Route_Description" Type="nchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="Route_Type">
+          <Key>
+            <PropertyRef Name="Id_Type_Route" />
+          </Key>
+          <Property Name="Id_Type_Route" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Route_Type" Type="nchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Tour">
+          <Key>
+            <PropertyRef Name="Tour_Id" />
+          </Key>
+          <Property Name="Tour_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Route_Id" Type="int" />
+          <Property Name="City_Id" Type="int" />
+          <Property Name="Tour_Cost" Type="money" />
+          <Property Name="Tour_Duration" Type="int" />
+          <Property Name="Date_of_Depature" Type="date" />
+          <Property Name="Tour_Name" Type="nchar" MaxLength="50" />
+          <Property Name="Tour_Image_Name" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_City_ToTable">
+          <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+          <End Role="City" Type="Self.City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Country_Id" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="Country_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Place_in_the_route_ToTable">
+          <End Role="Place" Type="Self.Place" Multiplicity="0..1" />
+          <End Role="Place_in_the_route" Type="Self.Place_in_the_route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="Place_Id" />
+            </Principal>
+            <Dependent Role="Place_in_the_route">
+              <PropertyRef Name="Place_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Place_in_the_route_ToTable_1">
+          <End Role="Route" Type="Self.Route" Multiplicity="0..1" />
+          <End Role="Place_in_the_route" Type="Self.Place_in_the_route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="Route_Id" />
+            </Principal>
+            <Dependent Role="Place_in_the_route">
+              <PropertyRef Name="Route_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Place_ToPlaces_Type">
+          <End Role="Place_Type" Type="Self.Place_Type" Multiplicity="0..1" />
+          <End Role="Place" Type="Self.Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place_Type">
+              <PropertyRef Name="Type_Place_Id" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="Type_Place_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Place_ToTable">
+          <End Role="City" Type="Self.City" Multiplicity="0..1" />
+          <End Role="Place" Type="Self.Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="City_Id" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="City_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_ToTable">
+          <End Role="Route_Type" Type="Self.Route_Type" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route_Type">
+              <PropertyRef Name="Id_Type_Route" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="Id_Type_Route" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tour_ToTable">
+          <End Role="City" Type="Self.City" Multiplicity="0..1" />
+          <End Role="Tour" Type="Self.Tour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="City_Id" />
+            </Principal>
+            <Dependent Role="Tour">
+              <PropertyRef Name="City_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tour_ToTable_1">
+          <End Role="Route" Type="Self.Route" Multiplicity="0..1" />
+          <End Role="Tour" Type="Self.Tour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="Route_Id" />
+            </Principal>
+            <Dependent Role="Tour">
+              <PropertyRef Name="Route_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище Bus_TourModel1Container">
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Place_in_the_route" EntityType="Self.Place_in_the_route" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Place_Type" EntityType="Self.Place_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Route" EntityType="Self.Route" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Route_Type" EntityType="Self.Route_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tour" EntityType="Self.Tour" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_City_ToTable" Association="Self.FK_City_ToTable">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="City" EntitySet="City" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_in_the_route_ToTable" Association="Self.FK_Place_in_the_route_ToTable">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="Place_in_the_route" EntitySet="Place_in_the_route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_in_the_route_ToTable_1" Association="Self.FK_Place_in_the_route_ToTable_1">
+            <End Role="Route" EntitySet="Route" />
+            <End Role="Place_in_the_route" EntitySet="Place_in_the_route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_ToPlaces_Type" Association="Self.FK_Place_ToPlaces_Type">
+            <End Role="Place_Type" EntitySet="Place_Type" />
+            <End Role="Place" EntitySet="Place" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_ToTable" Association="Self.FK_Place_ToTable">
+            <End Role="City" EntitySet="City" />
+            <End Role="Place" EntitySet="Place" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_ToTable" Association="Self.FK_Route_ToTable">
+            <End Role="Route_Type" EntitySet="Route_Type" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tour_ToTable" Association="Self.FK_Tour_ToTable">
+            <End Role="City" EntitySet="City" />
+            <End Role="Tour" EntitySet="Tour" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tour_ToTable_1" Association="Self.FK_Tour_ToTable_1">
+            <End Role="Route" EntitySet="Route" />
+            <End Role="Tour" EntitySet="Tour" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Bus_TourModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="City_Id" />
+          </Key>
+          <Property Name="City_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="City_name" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="City_short_descr" Type="String" MaxLength="300" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Tour" Relationship="Self.FK_Tour_ToTable" FromRole="City" ToRole="Tour" />
+          <NavigationProperty Name="Place" Relationship="Bus_TourModel1.FK_Place_ToTable" FromRole="City" ToRole="Place" />
+          <Property Name="Country_Id" Type="Int32" />
+          <NavigationProperty Name="Country1" Relationship="Bus_TourModel1.FK_City_ToTable" FromRole="City" ToRole="Country" />
+          <Property Name="City_Image_Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Place">
+          <Key>
+            <PropertyRef Name="Place_Id" />
+          </Key>
+          <Property Name="Place_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="City_Id" Type="Int32" />
+          <Property Name="Type_Place_Id" Type="Int32" />
+          <Property Name="Place_short_descr" Type="String" MaxLength="150" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Place_in_the_route" Relationship="Self.FK_Place_in_the_route_ToTable" FromRole="Place" ToRole="Place_in_the_route" />
+          <NavigationProperty Name="Place_Type" Relationship="Self.FK_Place_ToPlaces_Type" FromRole="Place" ToRole="Place_Type" />
+          <NavigationProperty Name="City" Relationship="Bus_TourModel1.FK_Place_ToTable" FromRole="Place" ToRole="City" />
+          <Property Name="Place_Image_Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Place_in_the_route">
+          <Key>
+            <PropertyRef Name="Place_in_the_route_Id" />
+          </Key>
+          <Property Name="Place_in_the_route_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Place_Id" Type="Int32" />
+          <Property Name="Route_Id" Type="Int32" />
+          <Property Name="Number_of_Day" Type="Int32" />
+          <NavigationProperty Name="Place" Relationship="Self.FK_Place_in_the_route_ToTable" FromRole="Place_in_the_route" ToRole="Place" />
+          <NavigationProperty Name="Route" Relationship="Self.FK_Place_in_the_route_ToTable_1" FromRole="Place_in_the_route" ToRole="Route" />
+          <Property Name="Day_Description" Type="String" MaxLength="900" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Place_Type">
+          <Key>
+            <PropertyRef Name="Type_Place_Id" />
+          </Key>
+          <Property Name="Type_Place_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Place_Type1" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Place" Relationship="Self.FK_Place_ToPlaces_Type" FromRole="Place_Type" ToRole="Place" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="Route_Id" />
+          </Key>
+          <Property Name="Route_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Type_Route" Type="Int32" Nullable="false" />
+          <Property Name="Route_Duration" Type="Int32" />
+          <Property Name="Route_Description" Type="String" MaxLength="150" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Place_in_the_route" Relationship="Self.FK_Place_in_the_route_ToTable_1" FromRole="Route" ToRole="Place_in_the_route" />
+          <NavigationProperty Name="Route_Type" Relationship="Self.FK_Route_ToTable" FromRole="Route" ToRole="Route_Type" />
+          <NavigationProperty Name="Tour" Relationship="Self.FK_Tour_ToTable_1" FromRole="Route" ToRole="Tour" />
+        </EntityType>
+        <EntityType Name="Route_Type">
+          <Key>
+            <PropertyRef Name="Id_Type_Route" />
+          </Key>
+          <Property Name="Id_Type_Route" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Route_Type1" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Route" Relationship="Self.FK_Route_ToTable" FromRole="Route_Type" ToRole="Route" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Tour">
+          <Key>
+            <PropertyRef Name="Tour_Id" />
+          </Key>
+          <Property Name="Tour_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Route_Id" Type="Int32" />
+          <Property Name="City_Id" Type="Int32" />
+          <Property Name="Tour_Cost" Type="Int32" />
+          <Property Name="Tour_Duration" Type="Int32" />
+          <Property Name="Date_of_Depature" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="City" Relationship="Self.FK_Tour_ToTable" FromRole="Tour" ToRole="City" />
+          <NavigationProperty Name="Route" Relationship="Self.FK_Tour_ToTable_1" FromRole="Tour" ToRole="Route" />
+          <Property Name="Tour_Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Tour_Image_Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Tour_ToTable">
+          <End Role="City" Type="Self.City" Multiplicity="0..1" />
+          <End Role="Tour" Type="Self.Tour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="City_Id" />
+            </Principal>
+            <Dependent Role="Tour">
+              <PropertyRef Name="City_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Place_in_the_route_ToTable">
+          <End Role="Place" Type="Self.Place" Multiplicity="0..1" />
+          <End Role="Place_in_the_route" Type="Self.Place_in_the_route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="Place_Id" />
+            </Principal>
+            <Dependent Role="Place_in_the_route">
+              <PropertyRef Name="Place_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Place_ToPlaces_Type">
+          <End Role="Place_Type" Type="Self.Place_Type" Multiplicity="0..1" />
+          <End Role="Place" Type="Self.Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place_Type">
+              <PropertyRef Name="Type_Place_Id" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="Type_Place_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Place_in_the_route_ToTable_1">
+          <End Role="Route" Type="Self.Route" Multiplicity="0..1" />
+          <End Role="Place_in_the_route" Type="Self.Place_in_the_route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="Route_Id" />
+            </Principal>
+            <Dependent Role="Place_in_the_route">
+              <PropertyRef Name="Route_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Route_ToTable">
+          <End Role="Route_Type" Type="Self.Route_Type" Multiplicity="1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route_Type">
+              <PropertyRef Name="Id_Type_Route" />
+            </Principal>
+            <Dependent Role="Route">
+              <PropertyRef Name="Id_Type_Route" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tour_ToTable_1">
+          <End Role="Route" Type="Self.Route" Multiplicity="0..1" />
+          <End Role="Tour" Type="Self.Tour" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="Route_Id" />
+            </Principal>
+            <Dependent Role="Tour">
+              <PropertyRef Name="Route_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Bus_TourEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="City" EntityType="Self.City" />
+          <EntitySet Name="Place" EntityType="Self.Place" />
+          <EntitySet Name="Place_in_the_route" EntityType="Self.Place_in_the_route" />
+          <EntitySet Name="Place_Type" EntityType="Self.Place_Type" />
+          <EntitySet Name="Route" EntityType="Self.Route" />
+          <EntitySet Name="Route_Type" EntityType="Self.Route_Type" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Tour" EntityType="Self.Tour" />
+          <AssociationSet Name="FK_Tour_ToTable" Association="Self.FK_Tour_ToTable">
+            <End Role="City" EntitySet="City" />
+            <End Role="Tour" EntitySet="Tour" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_in_the_route_ToTable" Association="Self.FK_Place_in_the_route_ToTable">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="Place_in_the_route" EntitySet="Place_in_the_route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_ToPlaces_Type" Association="Self.FK_Place_ToPlaces_Type">
+            <End Role="Place_Type" EntitySet="Place_Type" />
+            <End Role="Place" EntitySet="Place" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_in_the_route_ToTable_1" Association="Self.FK_Place_in_the_route_ToTable_1">
+            <End Role="Route" EntitySet="Route" />
+            <End Role="Place_in_the_route" EntitySet="Place_in_the_route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_ToTable" Association="Self.FK_Route_ToTable">
+            <End Role="Route_Type" EntitySet="Route_Type" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tour_ToTable_1" Association="Self.FK_Tour_ToTable_1">
+            <End Role="Route" EntitySet="Route" />
+            <End Role="Tour" EntitySet="Tour" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_ToTable" Association="Bus_TourModel1.FK_Place_ToTable">
+            <End Role="City" EntitySet="City" />
+            <End Role="Place" EntitySet="Place" />
+          </AssociationSet>
+          <EntitySet Name="Country" EntityType="Bus_TourModel1.Country" />
+          <AssociationSet Name="FK_City_ToTable" Association="Bus_TourModel1.FK_City_ToTable">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="City" EntitySet="City" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_Place_ToTable">
+          <End Type="Bus_TourModel1.City" Role="City" Multiplicity="0..1" />
+          <End Type="Bus_TourModel1.Place" Role="Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="City_Id" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="City_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Country_Id" />
+          </Key>
+          <Property Name="Country_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Country_Name" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="City" Relationship="Bus_TourModel1.FK_City_ToTable" FromRole="Country" ToRole="City" />
+        </EntityType>
+        <Association Name="FK_City_ToTable">
+          <End Type="Bus_TourModel1.Country" Role="Country" Multiplicity="0..1" />
+          <End Type="Bus_TourModel1.City" Role="City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Country_Id" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="Country_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Bus_TourModel1Container" CdmEntityContainer="Bus_TourEntities1">
+          <EntitySetMapping Name="City">
+            <EntityTypeMapping TypeName="Bus_TourModel1.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="City_Image_Name" ColumnName="City_Image_Name" />
+                <ScalarProperty Name="Country_Id" ColumnName="Country_Id" />
+                <ScalarProperty Name="City_Id" ColumnName="City_Id" />
+                <ScalarProperty Name="City_name" ColumnName="City_name" />
+                <ScalarProperty Name="City_short_descr" ColumnName="City_short_descr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Place">
+            <EntityTypeMapping TypeName="Bus_TourModel1.Place">
+              <MappingFragment StoreEntitySet="Place">
+                <ScalarProperty Name="Place_Image_Name" ColumnName="Place_Image_Name" />
+                <ScalarProperty Name="Place_Id" ColumnName="Place_Id" />
+                <ScalarProperty Name="City_Id" ColumnName="City_Id" />
+                <ScalarProperty Name="Type_Place_Id" ColumnName="Type_Place_Id" />
+                <ScalarProperty Name="Place_short_descr" ColumnName="Place_short_descr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Place_in_the_route">
+            <EntityTypeMapping TypeName="Bus_TourModel1.Place_in_the_route">
+              <MappingFragment StoreEntitySet="Place_in_the_route">
+                <ScalarProperty Name="Day_Description" ColumnName="Day_Description" />
+                <ScalarProperty Name="Place_in_the_route_Id" ColumnName="Place_in_the_route_Id" />
+                <ScalarProperty Name="Place_Id" ColumnName="Place_Id" />
+                <ScalarProperty Name="Route_Id" ColumnName="Route_Id" />
+                <ScalarProperty Name="Number_of_Day" ColumnName="Number_of_Day" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Place_Type">
+            <EntityTypeMapping TypeName="Bus_TourModel1.Place_Type">
+              <MappingFragment StoreEntitySet="Place_Type">
+                <ScalarProperty Name="Type_Place_Id" ColumnName="Type_Place_Id" />
+                <ScalarProperty Name="Place_Type1" ColumnName="Place_Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Route">
+            <EntityTypeMapping TypeName="Bus_TourModel1.Route">
+              <MappingFragment StoreEntitySet="Route">
+                <ScalarProperty Name="Route_Id" ColumnName="Route_Id" />
+                <ScalarProperty Name="Id_Type_Route" ColumnName="Id_Type_Route" />
+                <ScalarProperty Name="Route_Duration" ColumnName="Route_Duration" />
+                <ScalarProperty Name="Route_Description" ColumnName="Route_Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Route_Type">
+            <EntityTypeMapping TypeName="Bus_TourModel1.Route_Type">
+              <MappingFragment StoreEntitySet="Route_Type">
+                <ScalarProperty Name="Id_Type_Route" ColumnName="Id_Type_Route" />
+                <ScalarProperty Name="Route_Type1" ColumnName="Route_Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Bus_TourModel1.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tour">
+            <EntityTypeMapping TypeName="Bus_TourModel1.Tour">
+              <MappingFragment StoreEntitySet="Tour">
+                <ScalarProperty Name="Tour_Image_Name" ColumnName="Tour_Image_Name" />
+                <ScalarProperty Name="Tour_Name" ColumnName="Tour_Name" />
+                <ScalarProperty Name="Tour_Id" ColumnName="Tour_Id" />
+                <ScalarProperty Name="Route_Id" ColumnName="Route_Id" />
+                <ScalarProperty Name="City_Id" ColumnName="City_Id" />
+                <ScalarProperty Name="Tour_Cost" ColumnName="Tour_Cost" />
+                <ScalarProperty Name="Tour_Duration" ColumnName="Tour_Duration" />
+                <ScalarProperty Name="Date_of_Depature" ColumnName="Date_of_Depature" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Country">
+            <EntityTypeMapping TypeName="Bus_TourModel1.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="Country_Name" ColumnName="Country_Name" />
+                <ScalarProperty Name="Country_Id" ColumnName="Country_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

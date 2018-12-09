@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище Bus_TourModel1" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="City_Id" />
+    </Key>
+    <Property Name="City_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="City_name" Type="nchar" MaxLength="30" />
+    <Property Name="Country_Id" Type="int" />
+    <Property Name="City_short_descr" Type="nchar" MaxLength="300" />
+    <Property Name="City_Image_Name" Type="nchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="Country_Id" />
+    </Key>
+    <Property Name="Country_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Country_Name" Type="nchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="Place">
+    <Key>
+      <PropertyRef Name="Place_Id" />
+    </Key>
+    <Property Name="Place_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="City_Id" Type="int" />
+    <Property Name="Type_Place_Id" Type="int" />
+    <Property Name="Place_short_descr" Type="nchar" MaxLength="150" />
+    <Property Name="Place_Image_Name" Type="nchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Place_in_the_route">
+    <Key>
+      <PropertyRef Name="Place_in_the_route_Id" />
+    </Key>
+    <Property Name="Place_in_the_route_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Place_Id" Type="int" />
+    <Property Name="Route_Id" Type="int" />
+    <Property Name="Number_of_Day" Type="int" />
+    <Property Name="Day_Description" Type="nchar" MaxLength="900" />
+  </EntityType>
+  <EntityType Name="Place_Type">
+    <Key>
+      <PropertyRef Name="Type_Place_Id" />
+    </Key>
+    <Property Name="Type_Place_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Place_Type" Type="nchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="Route">
+    <Key>
+      <PropertyRef Name="Route_Id" />
+    </Key>
+    <Property Name="Route_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_Type_Route" Type="int" Nullable="false" />
+    <Property Name="Route_Duration" Type="int" />
+    <Property Name="Route_Description" Type="nchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="Route_Type">
+    <Key>
+      <PropertyRef Name="Id_Type_Route" />
+    </Key>
+    <Property Name="Id_Type_Route" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Route_Type" Type="nchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Tour">
+    <Key>
+      <PropertyRef Name="Tour_Id" />
+    </Key>
+    <Property Name="Tour_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Route_Id" Type="int" />
+    <Property Name="City_Id" Type="int" />
+    <Property Name="Tour_Cost" Type="money" />
+    <Property Name="Tour_Duration" Type="int" />
+    <Property Name="Date_of_Depature" Type="date" />
+    <Property Name="Tour_Name" Type="nchar" MaxLength="50" />
+    <Property Name="Tour_Image_Name" Type="nchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_City_ToTable">
+    <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+    <End Role="City" Type="Self.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="Country_Id" />
+      </Principal>
+      <Dependent Role="City">
+        <PropertyRef Name="Country_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Place_in_the_route_ToTable">
+    <End Role="Place" Type="Self.Place" Multiplicity="0..1" />
+    <End Role="Place_in_the_route" Type="Self.Place_in_the_route" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Place">
+        <PropertyRef Name="Place_Id" />
+      </Principal>
+      <Dependent Role="Place_in_the_route">
+        <PropertyRef Name="Place_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Place_in_the_route_ToTable_1">
+    <End Role="Route" Type="Self.Route" Multiplicity="0..1" />
+    <End Role="Place_in_the_route" Type="Self.Place_in_the_route" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Route">
+        <PropertyRef Name="Route_Id" />
+      </Principal>
+      <Dependent Role="Place_in_the_route">
+        <PropertyRef Name="Route_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Place_ToPlaces_Type">
+    <End Role="Place_Type" Type="Self.Place_Type" Multiplicity="0..1" />
+    <End Role="Place" Type="Self.Place" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Place_Type">
+        <PropertyRef Name="Type_Place_Id" />
+      </Principal>
+      <Dependent Role="Place">
+        <PropertyRef Name="Type_Place_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Place_ToTable">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Place" Type="Self.Place" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="City_Id" />
+      </Principal>
+      <Dependent Role="Place">
+        <PropertyRef Name="City_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Route_ToTable">
+    <End Role="Route_Type" Type="Self.Route_Type" Multiplicity="1" />
+    <End Role="Route" Type="Self.Route" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Route_Type">
+        <PropertyRef Name="Id_Type_Route" />
+      </Principal>
+      <Dependent Role="Route">
+        <PropertyRef Name="Id_Type_Route" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tour_ToTable">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Tour" Type="Self.Tour" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="City_Id" />
+      </Principal>
+      <Dependent Role="Tour">
+        <PropertyRef Name="City_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tour_ToTable_1">
+    <End Role="Route" Type="Self.Route" Multiplicity="0..1" />
+    <End Role="Tour" Type="Self.Tour" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Route">
+        <PropertyRef Name="Route_Id" />
+      </Principal>
+      <Dependent Role="Tour">
+        <PropertyRef Name="Route_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище Bus_TourModel1Container">
+    <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Place_in_the_route" EntityType="Self.Place_in_the_route" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Place_Type" EntityType="Self.Place_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Route" EntityType="Self.Route" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Route_Type" EntityType="Self.Route_Type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tour" EntityType="Self.Tour" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_City_ToTable" Association="Self.FK_City_ToTable">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="City" EntitySet="City" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Place_in_the_route_ToTable" Association="Self.FK_Place_in_the_route_ToTable">
+      <End Role="Place" EntitySet="Place" />
+      <End Role="Place_in_the_route" EntitySet="Place_in_the_route" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Place_in_the_route_ToTable_1" Association="Self.FK_Place_in_the_route_ToTable_1">
+      <End Role="Route" EntitySet="Route" />
+      <End Role="Place_in_the_route" EntitySet="Place_in_the_route" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Place_ToPlaces_Type" Association="Self.FK_Place_ToPlaces_Type">
+      <End Role="Place_Type" EntitySet="Place_Type" />
+      <End Role="Place" EntitySet="Place" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Place_ToTable" Association="Self.FK_Place_ToTable">
+      <End Role="City" EntitySet="City" />
+      <End Role="Place" EntitySet="Place" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Route_ToTable" Association="Self.FK_Route_ToTable">
+      <End Role="Route_Type" EntitySet="Route_Type" />
+      <End Role="Route" EntitySet="Route" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tour_ToTable" Association="Self.FK_Tour_ToTable">
+      <End Role="City" EntitySet="City" />
+      <End Role="Tour" EntitySet="Tour" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tour_ToTable_1" Association="Self.FK_Tour_ToTable_1">
+      <End Role="Route" EntitySet="Route" />
+      <End Role="Tour" EntitySet="Tour" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

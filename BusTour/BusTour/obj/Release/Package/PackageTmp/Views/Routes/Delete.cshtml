@@ -1,0 +1,48 @@
+﻿@model BusTour.Route
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="uk-text-large" class="uk-margin-top">Delete Route</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Route</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayName("Route Type")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Route_Type.Route_Type1)
+        </dd>
+        <dt>
+            @Html.DisplayName("Route Duration")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Route_Duration)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Route Description")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Route_Description)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="uk-button uk-button-primary" />
+        @Html.ActionLink("Back to List", "Index", new { }, htmlAttributes: new { @class = "uk-button uk-button-primary" })
+    </div>
+    }
+</div>

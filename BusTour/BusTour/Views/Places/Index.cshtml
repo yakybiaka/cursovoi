@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BusTour.Place>
+
+@{
+    ViewBag.Title = "Places";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="uk-text-large" class="uk-margin-top">Places</h2>
+
+<p class="link">
+    @Html.ActionLink("Create New", "Create", new { }, htmlAttributes: new { @class = "uk-button uk-button-primary" })
+</p>
+
+<div class="uk-block">
+    @foreach (var item in Model)
+    {
+        <div class="uk-block uk-block ">
+            <div class="uk-panel uk-panel-box uk-panel-box-primary">
+                <img src="/Image/@item.Place_Image_Name" class=" uk-float-left uk-margin-right" width="400" height="200" />
+                <h3 class="uk-panel-title">
+                    <i class="uk-icon-university">
+                    </i>  @Html.DisplayFor(modelItem => item.City.City_name)
+                </h3>
+
+                @Html.DisplayFor(modelItem => item.Place_Type.Place_Type1)
+                <br />
+                @Html.DisplayFor(modelItem => item.Place_short_descr)
+
+                <br />
+
+                @Html.ActionLink("Delete", "Delete", new { id = item.Place_Id }, htmlAttributes: new { @class = "uk-button uk-button-primary", @style= "position:absolute;right:33px;bottom:30px;width:100x;height:25px;" })
+                @Html.ActionLink("Details", "Details", new { id = item.Place_Id }, htmlAttributes: new { @class = "uk-button uk-button-primary", @style="position:absolute; right: 100px; bottom: 30px;" })
+                @Html.ActionLink("Edit", "Edit", new { id = item.Place_Id }, htmlAttributes: new { @class = "uk-button uk-button-primary", @style= "position:absolute;right:170px;bottom:30px;height:25px;" })
+
+            </div>
+        </div>
+    }
+</div>
+

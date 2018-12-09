@@ -1,0 +1,50 @@
+﻿@model IEnumerable<BusTour.Tour>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="uk-text-large" class="uk-margin-top">Tours</h2>
+
+<p class="link">
+    @Html.ActionLink("Create New", "Create", new { }, htmlAttributes: new { @class = "uk-button uk-button-primary" })
+</p>
+
+<div class="uk-container">
+
+    @foreach (var item in Model)
+    {
+        <div class="uk-block">
+            <div class="uk-panel uk-panel-box uk-panel-box-primary">
+                <img src="@item.Tour_Image_Name" class=" uk-float-left uk-margin-right" width="450" height="300" />
+                <h3 class="uk-panel-title">
+                    <i class="uk-icon-bus">
+                    </i> @Html.Label("Name") : @Html.DisplayFor(modelItem => item.Tour_Name)
+
+                    @Html.ActionLink("More..", "Details", new { id = item.Tour_Id }, htmlAttributes: new { @class = "uk-button uk-button-primary uk-float-right" })
+                </h3>
+                
+                @Html.DisplayFor(modelItem => item.Route.Route_Description)
+                <br />
+                <br />
+                @Html.Label("Date of Departure") : @Html.DisplayFor(modelItem => item.Date_of_Depature)
+                <br />
+
+                @Html.Label("Tour Duration") : @Html.DisplayFor(modelItem => item.Tour_Duration)
+                <br />
+
+                @Html.Label("Cost") :@Html.DisplayFor(modelItem => item.Tour_Cost) <i class="uk-icon-dollar"></i>
+                <br />
+
+                @Html.Label("Departure City") :@Html.DisplayFor(modelItem => item.City.City_name)
+                <br />
+
+                @Html.ActionLink("Edit", "Edit", new { id = item.Tour_Id }, htmlAttributes: new { @class = "uk-button uk-button-primary", @style = "position:absolute;right:100px;bottom:20px;height:25px;" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Tour_Id }, htmlAttributes: new { @class = "uk-button uk-button-primary", @style = "position:absolute;right:20px;bottom:20px;height:25px;" })
+
+            </div>
+
+        </div>
+    }
+</div>

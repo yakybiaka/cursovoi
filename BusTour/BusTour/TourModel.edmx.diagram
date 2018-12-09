@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="75271baf5cd94cf3acaf765a60dd90b7" Name="Diagram1">
+        <EntityTypeShape EntityType="Bus_TourModel1.City" Width="1.5" PointX="6.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Bus_TourModel1.Place" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Bus_TourModel1.Place_in_the_route" Width="1.5" PointX="5.25" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Bus_TourModel1.Place_Type" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="Bus_TourModel1.Route" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Bus_TourModel1.Route_Type" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="Bus_TourModel1.sysdiagrams" Width="1.5" PointX="5.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Bus_TourModel1.Tour" Width="1.5" PointX="8.25" PointY="3.5" IsExpanded="true" />
+        <AssociationConnector Association="Bus_TourModel1.FK_Tour_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="Bus_TourModel1.FK_Place_in_the_route_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="Bus_TourModel1.FK_Place_ToPlaces_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="Bus_TourModel1.FK_Place_in_the_route_ToTable_1" ManuallyRouted="false" />
+        <AssociationConnector Association="Bus_TourModel1.FK_Route_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="Bus_TourModel1.FK_Tour_ToTable_1" ManuallyRouted="false" />
+        <AssociationConnector Association="Bus_TourModel1.FK_Place_ToTable" />
+        <EntityTypeShape EntityType="Bus_TourModel1.Country" Width="1.5" PointX="4" PointY="0.75" />
+        <AssociationConnector Association="Bus_TourModel1.FK_City_ToTable" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

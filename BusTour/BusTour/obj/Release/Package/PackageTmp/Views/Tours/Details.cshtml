@@ -1,0 +1,98 @@
+﻿@model BusTour.Tour
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="uk-text-large" class="uk-margin-top">Tour Details</h2>
+<div class="uk-block uk-block-muted" style="background-color:lightgrey;">
+    <img src="@Model.Tour_Image_Name" class=" uk-float-left  uk-margin-left uk-margin-small-top" width="800" height="350" />
+    <div class="uk-block uk-block-default" style="background-color:white;position:absolute;left:15px;bottom:5px; width:800px; height:5px">
+        <h3 class="uk-text-center"> @Html.DisplayFor(model => model.Tour_Name)</h3>
+    </div>
+    <dl class="dl-horizontal uk-float-right uk-text-left" style="position:absolute;right:20px;top:40px;">
+        <dt class="uk-text-left">
+            @Html.DisplayName("Name")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tour_Name)
+        </dd>
+        <dt class="uk-text-left">
+            @Html.DisplayName("Route Description")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Route.Route_Description)
+        </dd>
+        <dt class="uk-text-left">
+            @Html.DisplayName("Cost")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tour_Cost)
+        </dd>
+
+        <dt class="uk-text-left">
+            @Html.DisplayName("Duration")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tour_Duration)
+        </dd>
+
+        <dt class="uk-text-left">
+            @Html.DisplayName("Date of Depature")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date_of_Depature)
+        </dd>
+
+        <dt class="uk-text-left">
+            @Html.DisplayName("City of Departure")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City.City_name)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    <br />
+    <br />
+</div>
+
+
+<div class="uk-block uk-block-muted">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Number of Day in Route")
+            </th>
+            <th>
+                @Html.DisplayName("Day Description")
+            </th>
+        </tr>
+
+        @foreach (var p in ViewBag.Places)
+        {
+            <tr>
+                <td>
+                    Day @p.Number_of_Day
+                    <p> @Html.DisplayFor(model => model.Date_of_Depature)</p>
+                </td>
+                <td>
+                    @p.Day_Description
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Tour_Id }, htmlAttributes: new { @class = "uk-button uk-button-primary" }) 
+    @Html.ActionLink("Back to List", "Index", new { }, htmlAttributes: new { @class = "uk-button uk-button-primary" })
+</p>
