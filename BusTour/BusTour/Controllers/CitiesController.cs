@@ -17,30 +17,51 @@ namespace BusTour.Controllers
         // GET: Cities
         public ActionResult Index()
         {
-            var city = db.City.Include(p => p.Country1);
-            return View(city.ToList());
+            try
+            {
+                var city = db.City.Include(p => p.Country1);
+                return View(city.ToList());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // GET: Cities/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                City city = db.City.Find(id);
+                if (city == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(city);
             }
-            City city = db.City.Find(id);
-            if (city == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                throw ex;
             }
-            return View(city);
         }
 
         // GET: Cities/Create
         public ActionResult Create()
         {
-            ViewBag.Country_Id = new SelectList(db.Country, "Country_Id", "Country_Name");
-            return View();
+            try
+            {
+                ViewBag.Country_Id = new SelectList(db.Country, "Country_Id", "Country_Name");
+                return View();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // POST: Cities/Create
@@ -50,36 +71,50 @@ namespace BusTour.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "City_Id,City_name,Country_Id,City_short_descr")] City city, HttpPostedFileBase upload)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (upload != null)
+                if (ModelState.IsValid)
                 {
-                    string fileName = System.IO.Path.GetFileName(upload.FileName);
-                    upload.SaveAs(Server.MapPath("~/Image/" + fileName));
-                    db.City.Add(city);
-                    city.City_Image_Name = fileName;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (upload != null)
+                    {
+                        string fileName = System.IO.Path.GetFileName(upload.FileName);
+                        upload.SaveAs(Server.MapPath("~/Image/" + fileName));
+                        db.City.Add(city);
+                        city.City_Image_Name = fileName;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
                 }
+                ViewBag.Country_Id = new SelectList(db.Country, "Country_Id", "Country_Name", city.Country_Id);
+                return View(city);
             }
-            ViewBag.Country_Id = new SelectList(db.Country, "Country_Id", "Country_Name", city.Country_Id);
-            return View(city);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // GET: Cities/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                City city = db.City.Find(id);
+                if (city == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.Country_Id = new SelectList(db.Country, "Country_Id", "Country_Name");
+                return View(city);
             }
-            City city = db.City.Find(id);
-            if (city == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                throw ex;
             }
-            ViewBag.Country_Id = new SelectList(db.Country, "Country_Id", "Country_Name");
-            return View(city);
         }
 
         // POST: Cities/Edit/5
@@ -89,35 +124,49 @@ namespace BusTour.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "City_Id,City_name,Country,City_short_descr")] City city, HttpPostedFileBase upload)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (upload != null)
+                if (ModelState.IsValid)
                 {
-                    string fileName = System.IO.Path.GetFileName(upload.FileName);
-                    upload.SaveAs(Server.MapPath("~/Image/" + fileName));
-                    db.Entry(city).State = EntityState.Modified;
-                    city.City_Image_Name = fileName;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (upload != null)
+                    {
+                        string fileName = System.IO.Path.GetFileName(upload.FileName);
+                        upload.SaveAs(Server.MapPath("~/Image/" + fileName));
+                        db.Entry(city).State = EntityState.Modified;
+                        city.City_Image_Name = fileName;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
                 }
+                ViewBag.Country_Id = new SelectList(db.Country, "Country_Id", "Country_Name");
+                return View(city);
             }
-            ViewBag.Country_Id = new SelectList(db.Country, "Country_Id", "Country_Name");
-            return View(city);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // GET: Cities/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                City city = db.City.Find(id);
+                if (city == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(city);
             }
-            City city = db.City.Find(id);
-            if (city == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                throw ex;
             }
-            return View(city);
         }
 
         // POST: Cities/Delete/5
@@ -125,19 +174,33 @@ namespace BusTour.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            City city = db.City.Find(id);
-            db.City.Remove(city);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                City city = db.City.Find(id);
+                db.City.Remove(city);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            try
             {
-                db.Dispose();
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+                base.Dispose(disposing);
             }
-            base.Dispose(disposing);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

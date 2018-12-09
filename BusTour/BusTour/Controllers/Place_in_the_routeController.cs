@@ -17,31 +17,52 @@ namespace BusTour.Controllers
         // GET: Place_in_the_route
         public ActionResult Index()
         {
-            var place_in_the_route = db.Place_in_the_route.Include(p => p.Place).Include(p => p.Route);
-            return View(place_in_the_route.ToList());
+            try
+            {
+                var place_in_the_route = db.Place_in_the_route.Include(p => p.Place).Include(p => p.Route);
+                return View(place_in_the_route.ToList());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // GET: Place_in_the_route/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Place_in_the_route place_in_the_route = db.Place_in_the_route.Find(id);
+                if (place_in_the_route == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(place_in_the_route);
             }
-            Place_in_the_route place_in_the_route = db.Place_in_the_route.Find(id);
-            if (place_in_the_route == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                throw ex;
             }
-            return View(place_in_the_route);
         }
 
         // GET: Place_in_the_route/Create
         public ActionResult Create()
         {
-            ViewBag.Place_Id = new SelectList(db.Place, "Place_Id", "Place_short_descr");
-            ViewBag.Route_Id = new SelectList(db.Route, "Route_Id", "Route_Description");
-            return View();
+            try
+            {
+                ViewBag.Place_Id = new SelectList(db.Place, "Place_Id", "Place_short_descr");
+                ViewBag.Route_Id = new SelectList(db.Route, "Route_Id", "Route_Description");
+                return View();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // POST: Place_in_the_route/Create
@@ -51,33 +72,47 @@ namespace BusTour.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Place_in_the_route_Id,Place_Id,Route_Id,Number_of_Day,Day_Description")] Place_in_the_route place_in_the_route)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Place_in_the_route.Add(place_in_the_route);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    db.Place_in_the_route.Add(place_in_the_route);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-            ViewBag.Place_Id = new SelectList(db.Place, "Place_Id", "Place_short_descr", place_in_the_route.Place_Id);
-            ViewBag.Route_Id = new SelectList(db.Route, "Route_Id", "Route_Description", place_in_the_route.Route_Id);
-            return View(place_in_the_route);
+                ViewBag.Place_Id = new SelectList(db.Place, "Place_Id", "Place_short_descr", place_in_the_route.Place_Id);
+                ViewBag.Route_Id = new SelectList(db.Route, "Route_Id", "Route_Description", place_in_the_route.Route_Id);
+                return View(place_in_the_route);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // GET: Place_in_the_route/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Place_in_the_route place_in_the_route = db.Place_in_the_route.Find(id);
+                if (place_in_the_route == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.Place_Id = new SelectList(db.Place, "Place_Id", "Place_short_descr", place_in_the_route.Place_Id);
+                ViewBag.Route_Id = new SelectList(db.Route, "Route_Id", "Route_Description", place_in_the_route.Route_Id);
+                return View(place_in_the_route);
             }
-            Place_in_the_route place_in_the_route = db.Place_in_the_route.Find(id);
-            if (place_in_the_route == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                throw ex;
             }
-            ViewBag.Place_Id = new SelectList(db.Place, "Place_Id", "Place_short_descr", place_in_the_route.Place_Id);
-            ViewBag.Route_Id = new SelectList(db.Route, "Route_Id", "Route_Description", place_in_the_route.Route_Id);
-            return View(place_in_the_route);
         }
 
         // POST: Place_in_the_route/Edit/5
@@ -87,30 +122,45 @@ namespace BusTour.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Place_in_the_route_Id,Place_Id,Route_Id,Number_of_Day,Day_Description")] Place_in_the_route place_in_the_route)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(place_in_the_route).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(place_in_the_route).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.Place_Id = new SelectList(db.Place, "Place_Id", "Place_short_descr", place_in_the_route.Place_Id);
+                ViewBag.Route_Id = new SelectList(db.Route, "Route_Id", "Route_Description", place_in_the_route.Route_Id);
+                return View(place_in_the_route);
             }
-            ViewBag.Place_Id = new SelectList(db.Place, "Place_Id", "Place_short_descr", place_in_the_route.Place_Id);
-            ViewBag.Route_Id = new SelectList(db.Route, "Route_Id", "Route_Description", place_in_the_route.Route_Id);
-            return View(place_in_the_route);
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // GET: Place_in_the_route/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Place_in_the_route place_in_the_route = db.Place_in_the_route.Find(id);
+                if (place_in_the_route == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(place_in_the_route);
             }
-            Place_in_the_route place_in_the_route = db.Place_in_the_route.Find(id);
-            if (place_in_the_route == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                throw ex;
             }
-            return View(place_in_the_route);
         }
 
         // POST: Place_in_the_route/Delete/5
@@ -118,19 +168,33 @@ namespace BusTour.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Place_in_the_route place_in_the_route = db.Place_in_the_route.Find(id);
-            db.Place_in_the_route.Remove(place_in_the_route);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Place_in_the_route place_in_the_route = db.Place_in_the_route.Find(id);
+                db.Place_in_the_route.Remove(place_in_the_route);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            try
             {
-                db.Dispose();
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+                base.Dispose(disposing);
             }
-            base.Dispose(disposing);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

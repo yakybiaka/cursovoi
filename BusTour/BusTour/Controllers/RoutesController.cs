@@ -17,30 +17,51 @@ namespace BusTour.Controllers
         // GET: Routes
         public ActionResult Index()
         {
-            var route = db.Route.Include(r => r.Route_Type);
-            return View(route.ToList());
+            try
+            {
+                var route = db.Route.Include(r => r.Route_Type);
+                return View(route.ToList());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // GET: Routes/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Route route = db.Route.Find(id);
+                if (route == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(route);
             }
-            Route route = db.Route.Find(id);
-            if (route == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                throw ex;
             }
-            return View(route);
         }
 
         // GET: Routes/Create
         public ActionResult Create()
         {
-            ViewBag.Id_Type_Route = new SelectList(db.Route_Type, "Id_Type_Route", "Route_Type1");
-            return View();
+            try
+            {
+                ViewBag.Id_Type_Route = new SelectList(db.Route_Type, "Id_Type_Route", "Route_Type1");
+                return View();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // POST: Routes/Create
@@ -50,31 +71,45 @@ namespace BusTour.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Route_Id,Id_Type_Route,Route_Duration,Route_Description")] Route route)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Route.Add(route);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    db.Route.Add(route);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-            ViewBag.Id_Type_Route = new SelectList(db.Route_Type, "Id_Type_Route", "Route_Type1", route.Id_Type_Route);
-            return View(route);
+                ViewBag.Id_Type_Route = new SelectList(db.Route_Type, "Id_Type_Route", "Route_Type1", route.Id_Type_Route);
+                return View(route);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // GET: Routes/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Route route = db.Route.Find(id);
+                if (route == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.Id_Type_Route = new SelectList(db.Route_Type, "Id_Type_Route", "Route_Type1", route.Id_Type_Route);
+                return View(route);
             }
-            Route route = db.Route.Find(id);
-            if (route == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                throw ex;
             }
-            ViewBag.Id_Type_Route = new SelectList(db.Route_Type, "Id_Type_Route", "Route_Type1", route.Id_Type_Route);
-            return View(route);
         }
 
         // POST: Routes/Edit/5
@@ -84,29 +119,43 @@ namespace BusTour.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Route_Id,Id_Type_Route,Route_Duration,Route_Description")] Route route)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(route).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(route).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.Id_Type_Route = new SelectList(db.Route_Type, "Id_Type_Route", "Route_Type1", route.Id_Type_Route);
+                return View(route);
             }
-            ViewBag.Id_Type_Route = new SelectList(db.Route_Type, "Id_Type_Route", "Route_Type1", route.Id_Type_Route);
-            return View(route);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // GET: Routes/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Route route = db.Route.Find(id);
+                if (route == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(route);
             }
-            Route route = db.Route.Find(id);
-            if (route == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                throw ex;
             }
-            return View(route);
         }
 
         // POST: Routes/Delete/5
@@ -114,19 +163,33 @@ namespace BusTour.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Route route = db.Route.Find(id);
-            db.Route.Remove(route);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Route route = db.Route.Find(id);
+                db.Route.Remove(route);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            try
             {
-                db.Dispose();
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+                base.Dispose(disposing);
             }
-            base.Dispose(disposing);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

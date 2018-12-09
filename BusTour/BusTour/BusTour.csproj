@@ -232,7 +232,6 @@
     <Compile Include="Models\Emailer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\MessageServices.cs" />
     <Compile Include="Place.cs">
       <DependentUpon>TourModel.tt</DependentUpon>
     </Compile>

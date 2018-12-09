@@ -13,28 +13,56 @@ namespace BusTour.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            try
+            {
+                ViewBag.Message = "Your application description page.";
 
-            return View();
+                return View();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            try
+            {
+                ViewBag.Message = "Your contact page.";
 
-            return View();
+                return View();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         [HttpPost]
         public ActionResult Feedback(Tour model)
         {
-           Emailer.Send(model.Email);
-           return RedirectToAction("Index", "Tours");
+            try
+            {
+                Emailer.Send(model.Email, model.Name, model.Tour_Name);
+                return RedirectToAction("Index", "Tours");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

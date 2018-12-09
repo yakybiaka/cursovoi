@@ -17,31 +17,52 @@ namespace BusTour.Controllers
         // GET: Places
         public ActionResult Index()
         {
-            var place = db.Place.Include(p => p.Place_Type).Include(p => p.City);
-            return View(place.ToList());
+            try
+            {
+                var place = db.Place.Include(p => p.Place_Type).Include(p => p.City);
+                return View(place.ToList());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // GET: Places/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Place place = db.Place.Find(id);
+                if (place == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(place);
             }
-            Place place = db.Place.Find(id);
-            if (place == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                throw ex;
             }
-            return View(place);
         }
 
         // GET: Places/Create
         public ActionResult Create()
         {
-            ViewBag.Type_Place_Id = new SelectList(db.Place_Type, "Type_Place_Id", "Place_Type1");
-            ViewBag.City_Id = new SelectList(db.City, "City_Id", "City_name");
-            return View();
+            try
+            {
+                ViewBag.Type_Place_Id = new SelectList(db.Place_Type, "Type_Place_Id", "Place_Type1");
+                ViewBag.City_Id = new SelectList(db.City, "City_Id", "City_name");
+                return View();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // POST: Places/Create
@@ -51,37 +72,51 @@ namespace BusTour.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Place_Id,City_Id,Type_Place_Id,Place_short_descr")] Place place, HttpPostedFileBase upload)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (upload != null)
+                if (ModelState.IsValid)
                 {
-                    string fileName = System.IO.Path.GetFileName(upload.FileName);
-                    upload.SaveAs(Server.MapPath("~/Image/" + fileName));
-                    place.Place_Image_Name = fileName;
-                    db.Place.Add(place);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (upload != null)
+                    {
+                        string fileName = System.IO.Path.GetFileName(upload.FileName);
+                        upload.SaveAs(Server.MapPath("~/Image/" + fileName));
+                        place.Place_Image_Name = fileName;
+                        db.Place.Add(place);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
                 }
+                ViewBag.Type_Place_Id = new SelectList(db.Place_Type, "Type_Place_Id", "Place_Type1", place.Type_Place_Id);
+                return View(place);
             }
-            ViewBag.Type_Place_Id = new SelectList(db.Place_Type, "Type_Place_Id", "Place_Type1", place.Type_Place_Id);
-            return View(place);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // GET: Places/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Place place = db.Place.Find(id);
+                if (place == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.Type_Place_Id = new SelectList(db.Place_Type, "Type_Place_Id", "Place_Type1", place.Type_Place_Id);
+                ViewBag.City_Id = new SelectList(db.City, "City_Id", "City_name", place.City_Id);
+                return View(place);
             }
-            Place place = db.Place.Find(id);
-            if (place == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                throw ex;
             }
-            ViewBag.Type_Place_Id = new SelectList(db.Place_Type, "Type_Place_Id", "Place_Type1", place.Type_Place_Id);
-            ViewBag.City_Id = new SelectList(db.City, "City_Id", "City_name", place.City_Id);
-            return View(place);
         }
 
         // POST: Places/Edit/5
@@ -91,35 +126,49 @@ namespace BusTour.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Place_Id,City_Id,Type_Place_Id,Place_short_descr")] Place place, HttpPostedFileBase upload)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (upload != null)
+                if (ModelState.IsValid)
                 {
-                    string fileName = System.IO.Path.GetFileName(upload.FileName);
-                    upload.SaveAs(Server.MapPath("~/Image/" + fileName));
-                    db.Entry(place).State = EntityState.Modified;
-                    place.Place_Image_Name = fileName;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (upload != null)
+                    {
+                        string fileName = System.IO.Path.GetFileName(upload.FileName);
+                        upload.SaveAs(Server.MapPath("~/Image/" + fileName));
+                        db.Entry(place).State = EntityState.Modified;
+                        place.Place_Image_Name = fileName;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
                 }
+                ViewBag.Type_Place_Id = new SelectList(db.Place_Type, "Type_Place_Id", "Place_Type1", place.Type_Place_Id);
+                return View(place);
             }
-            ViewBag.Type_Place_Id = new SelectList(db.Place_Type, "Type_Place_Id", "Place_Type1", place.Type_Place_Id);
-            return View(place);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // GET: Places/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Place place = db.Place.Find(id);
+                if (place == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(place);
             }
-            Place place = db.Place.Find(id);
-            if (place == null)
+            catch (Exception ex)
             {
-                return HttpNotFound();
+                throw ex;
             }
-            return View(place);
         }
 
         // POST: Places/Delete/5
@@ -127,19 +176,33 @@ namespace BusTour.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Place place = db.Place.Find(id);
-            db.Place.Remove(place);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Place place = db.Place.Find(id);
+                db.Place.Remove(place);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            try
             {
-                db.Dispose();
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+                base.Dispose(disposing);
             }
-            base.Dispose(disposing);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
